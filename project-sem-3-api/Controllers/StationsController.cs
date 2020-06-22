@@ -18,7 +18,7 @@ namespace project_sem_3_api.Controllers
         private MyDatabaseContext db = new MyDatabaseContext();
 
         // GET: api/Stations
-        public IHttpActionResult GetStations(int page = 1, int size = 2, int? status = null, string name = null)
+        public IHttpActionResult GetStations(int page = 1, int size = 25, int? status = null, string name = null, string startDate = null, string endDate = null )
         {
             var skip = (page - 1) * size;
 
@@ -28,11 +28,21 @@ namespace project_sem_3_api.Controllers
             var stations = db.Stations.AsQueryable();
             if (status != null)
             {
-                stations = stations.Where(s => s.Status.Equals(status));
+                stations = stations.Where(s => s.Status == status);
             }
             if (name != null)
             {
-                stations = stations.Where(s => s.Name.Equals(name));
+                stations = stations.Where(s => s.Name.Contains(name));
+            }
+            if (startDate != null)
+            {
+                var startDateFormat = Convert.ToDateTime(startDate);
+                stations = stations.Where(s => s.CreatedAt >= startDateFormat);
+            }
+            if (endDate != null)
+            {
+                var tomorrow = Convert.ToDateTime(endDate).AddDays(1);
+                stations = stations.Where(s => s.CreatedAt < tomorrow);
             }
             // Select the customers based on paging parameters
             stations = stations
