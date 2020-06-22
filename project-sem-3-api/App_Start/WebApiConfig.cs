@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace project_sem_3_api
 {
@@ -10,7 +11,8 @@ namespace project_sem_3_api
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
-
+            var cors = new EnableCorsAttribute("localhost:8080", "*", "*");
+            config.EnableCors();
             // Web API routes
             config.MapHttpAttributeRoutes();
 
