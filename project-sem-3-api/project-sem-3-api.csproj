@@ -163,7 +163,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Controllers\StationsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -171,8 +171,21 @@
     <Compile Include="Migrations\202006200629176_first_migrate.designer.cs">
       <DependentUpon>202006200629176_first_migrate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202006211826531_add long lat.cs" />
+    <Compile Include="Migrations\202006211826531_add long lat.designer.cs">
+      <DependentUpon>202006211826531_add long lat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006211829145_long lat can null.cs" />
+    <Compile Include="Migrations\202006211829145_long lat can null.designer.cs">
+      <DependentUpon>202006211829145_long lat can null.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006211855509_change_lat_long_type.cs" />
+    <Compile Include="Migrations\202006211855509_change_lat_long_type.designer.cs">
+      <DependentUpon>202006211855509_change_lat_long_type.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\MyDatabaseContext.cs" />
+    <Compile Include="Models\PagedResult.cs" />
     <Compile Include="Models\Seat.cs" />
     <Compile Include="Models\SeatPrice.cs" />
     <Compile Include="Models\Station.cs" />
@@ -269,6 +282,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202006200629176_first_migrate.resx">
       <DependentUpon>202006200629176_first_migrate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006211826531_add long lat.resx">
+      <DependentUpon>202006211826531_add long lat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006211829145_long lat can null.resx">
+      <DependentUpon>202006211829145_long lat can null.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006211855509_change_lat_long_type.resx">
+      <DependentUpon>202006211855509_change_lat_long_type.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

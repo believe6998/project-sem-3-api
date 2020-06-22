@@ -10,9 +10,19 @@ namespace project_sem_3_api.Models
         public int Id { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
-        public DateTime CreatedAt  { get; set; }
-        public DateTime UpdatedAt  { get; set; }
-        public DateTime DeletedAt  { get; set; }
-        public int Status { get; set; }
+        public string Longitudes  { get; set; }
+        public string Latitudes  { get; set; }
+        public DateTime CreatedAt
+        {
+            get =>
+                _dateCreated ?? DateTime.Now;
+
+            set => this._dateCreated = value;
+        }
+
+        private DateTime? _dateCreated = null;
+        public DateTime? UpdatedAt  { get; set; }
+        public DateTime? DeletedAt  { get; set; }
+        public int Status { get ; set; }
     }
 }
