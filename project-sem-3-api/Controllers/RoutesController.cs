@@ -1,23 +1,20 @@
 ﻿using HelloCorona.Models;
-using LinqToDB;
 using project_sem_3_api.Models;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Web.Http;
 
 namespace project_sem_3_api.Controllers
 {
-    public class ValuesController : ApiController
+    public class RoutesController : ApiController
     {
         private MyDatabaseContext db = new MyDatabaseContext();
-
-        // GET api/values
-        public IEnumerable<dynamic> Get(int StartStation, int EndStation, DateTime? StartDate)
+        // GET: api/Route
+        public IEnumerable<dynamic> Get(int StartStation, int EndStation)
         {
-            // join t in db.Trains on ts.IdTrain equals t.Id
-            // join s in db.Stations on ts.IdStation equals s.Id
             var result = from s in (
                             from s1 in db.TrainStations.Cast<TrainStation>()
                             where s1.IdStation == StartStation
@@ -70,23 +67,23 @@ namespace project_sem_3_api.Controllers
             return result;
         }
 
-        // GET api/values/5
+        // GET: api/Route/5
         public string Get(int id)
         {
             return "value";
         }
 
-        // POST api/values
-        public void Post([FromBody] string value)
+        // POST: api/Route
+        public void Post([FromBody]string value)
         {
         }
 
-        // PUT api/values/5
-        public void Put(int id, [FromBody] string value)
+        // PUT: api/Route/5
+        public void Put(int id, [FromBody]string value)
         {
         }
 
-        // DELETE api/values/5
+        // DELETE: api/Route/5
         public void Delete(int id)
         {
         }
