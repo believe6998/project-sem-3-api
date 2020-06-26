@@ -7,13 +7,13 @@ namespace project_sem_3_api.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class first_migrate : IMigrationMetadata
+    public sealed partial class Reset : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(first_migrate));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Reset));
         
         string IMigrationMetadata.Id
         {
-            get { return "202006200629176_first_migrate"; }
+            get { return "202006261559043_Reset"; }
         }
         
         string IMigrationMetadata.Source

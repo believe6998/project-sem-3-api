@@ -20,6 +20,11 @@ namespace HelloCorona.Models
         public DbSet<TrainTrainCar> TrainTrainCars { get; set; }
         public DbSet<TrainCarType> TrainCarTypes { get; set; }
         public DbSet<Seat> Seats { get; set; }
-        public DbSet<SeatPrice> SeatPrices { get; set; }
+        public DbSet<SeatType> SeatTypes { get; set; }
+        // public DbSet<Object> Objects { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Ticket> Tickets { get; set; }
+
     }
+    
 }

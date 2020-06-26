@@ -3,24 +3,19 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class first_migrate : DbMigration
+    public partial class Reset : DbMigration
     {
         public override void Up()
         {
             CreateTable(
-                "dbo.SeatPrices",
+                "dbo.Orders",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        IdSeat = c.Int(nullable: false),
-                        Code = c.String(),
-                        Price = c.Decimal(nullable: false, precision: 18, scale: 2),
-                        Date = c.DateTime(nullable: false),
-                        Repeat = c.Int(nullable: false),
-                        CreatedAt = c.DateTime(nullable: false),
-                        UpdatedAt = c.DateTime(nullable: false),
-                        DeletedAt = c.DateTime(nullable: false),
-                        Status = c.Int(nullable: false),
+                        TotalPrice = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        Email = c.String(),
+                        Name = c.String(),
+                        Phone = c.String(),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -29,12 +24,26 @@
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Code = c.String(),
-                        CurrentPrice = c.Decimal(nullable: false, precision: 18, scale: 2),
-                        IdTrainCarType = c.Int(nullable: false),
+                        SeatNo = c.Int(nullable: false),
+                        IdSeatType = c.Int(nullable: false),
                         CreatedAt = c.DateTime(nullable: false),
-                        UpdatedAt = c.DateTime(nullable: false),
-                        DeletedAt = c.DateTime(nullable: false),
+                        UpdatedAt = c.DateTime(),
+                        DeletedAt = c.DateTime(),
+                        Status = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.SeatTypes",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        IdTrainCarType = c.Int(nullable: false),
+                        Name = c.String(),
+                        Price = c.Int(nullable: false),
+                        CreatedAt = c.DateTime(nullable: false),
+                        UpdatedAt = c.DateTime(),
+                        DeletedAt = c.DateTime(),
                         Status = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
@@ -44,11 +53,30 @@
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Code = c.String(),
                         Name = c.String(),
+                        Location = c.Geography(),
                         CreatedAt = c.DateTime(nullable: false),
-                        UpdatedAt = c.DateTime(nullable: false),
-                        DeletedAt = c.DateTime(nullable: false),
+                        UpdatedAt = c.DateTime(),
+                        DeletedAt = c.DateTime(),
+                        Status = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.Tickets",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        IdSource = c.Int(nullable: false),
+                        IdDestination = c.Int(nullable: false),
+                        IdTrainCar = c.Int(nullable: false),
+                        IdSeat = c.Int(nullable: false),
+                        IdentityNumber = c.String(),
+                        Price = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        DepartureDay = c.String(),
+                        CreatedAt = c.DateTime(nullable: false),
+                        UpdatedAt = c.DateTime(),
+                        DeletedAt = c.DateTime(),
                         Status = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
@@ -58,12 +86,12 @@
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Code = c.String(),
                         IdTrain = c.Int(nullable: false),
                         IdTrainCarType = c.Int(nullable: false),
+                        IndexNumber = c.Int(nullable: false),
                         CreatedAt = c.DateTime(nullable: false),
-                        UpdatedAt = c.DateTime(nullable: false),
-                        DeletedAt = c.DateTime(nullable: false),
+                        UpdatedAt = c.DateTime(),
+                        DeletedAt = c.DateTime(),
                         Status = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
@@ -74,11 +102,10 @@
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Code = c.String(),
-                        IdTrain = c.Int(nullable: false),
                         Name = c.String(),
                         CreatedAt = c.DateTime(nullable: false),
-                        UpdatedAt = c.DateTime(nullable: false),
-                        DeletedAt = c.DateTime(nullable: false),
+                        UpdatedAt = c.DateTime(),
+                        DeletedAt = c.DateTime(),
                         Status = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
@@ -90,8 +117,8 @@
                         Id = c.Int(nullable: false, identity: true),
                         Code = c.String(),
                         CreatedAt = c.DateTime(nullable: false),
-                        UpdatedAt = c.DateTime(nullable: false),
-                        DeletedAt = c.DateTime(nullable: false),
+                        UpdatedAt = c.DateTime(),
+                        DeletedAt = c.DateTime(),
                         Status = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
@@ -103,11 +130,11 @@
                         Id = c.Int(nullable: false, identity: true),
                         IdTrain = c.Int(nullable: false),
                         IdStation = c.Int(nullable: false),
-                        Index = c.Int(nullable: false),
-                        Time = c.Long(nullable: false),
+                        IndexNumber = c.Int(nullable: false),
+                        ArrivalTime = c.Long(nullable: false),
                         CreatedAt = c.DateTime(nullable: false),
-                        UpdatedAt = c.DateTime(nullable: false),
-                        DeletedAt = c.DateTime(nullable: false),
+                        UpdatedAt = c.DateTime(),
+                        DeletedAt = c.DateTime(),
                         Status = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
@@ -121,9 +148,10 @@
                         IdTrainCar = c.Int(nullable: false),
                         Date = c.DateTime(nullable: false),
                         Repeat = c.Int(nullable: false),
+                        PricePercent = c.Int(nullable: false),
                         CreatedAt = c.DateTime(nullable: false),
-                        UpdatedAt = c.DateTime(nullable: false),
-                        DeletedAt = c.DateTime(nullable: false),
+                        UpdatedAt = c.DateTime(),
+                        DeletedAt = c.DateTime(),
                         Status = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
@@ -137,9 +165,11 @@
             DropTable("dbo.Trains");
             DropTable("dbo.TrainCarTypes");
             DropTable("dbo.TrainCars");
+            DropTable("dbo.Tickets");
             DropTable("dbo.Stations");
+            DropTable("dbo.SeatTypes");
             DropTable("dbo.Seats");
-            DropTable("dbo.SeatPrices");
+            DropTable("dbo.Orders");
         }
     }
 }

@@ -10,11 +10,11 @@ namespace project_sem_3_api.Models
         public int Id { get; set; }
         public int IdTrain { get; set; }
         public int IdStation { get; set; }
-        public int Index { get; set; }
-        public long Time { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
-        public DateTime DeletedAt { get; set; }
-        public int Status { get; set; }
+        public int IndexNumber { get; set; }
+        public long ArrivalTime { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime? UpdatedAt { get; set; }
+        public DateTime? DeletedAt { get; set; }
+        public int Status { get; set; } = 1;
     }
 }
