@@ -7,13 +7,13 @@ namespace project_sem_3_api.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class longlatcannull : IMigrationMetadata
+    public sealed partial class Initial : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(longlatcannull));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Initial));
         
         string IMigrationMetadata.Id
         {
-            get { return "202006211829145_long lat can null"; }
+            get { return "202006261627085_Initial"; }
         }
         
         string IMigrationMetadata.Source
