@@ -161,6 +161,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\RoutesController.cs" />
     <Compile Include="Controllers\SeatsController.cs" />
     <Compile Include="Controllers\TrainCarsController.cs" />
@@ -172,6 +173,10 @@
     <Compile Include="Migrations\202006261627085_Initial.cs" />
     <Compile Include="Migrations\202006261627085_Initial.designer.cs">
       <DependentUpon>202006261627085_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006290457574_fix_model_ticket.cs" />
+    <Compile Include="Migrations\202006290457574_fix_model_ticket.designer.cs">
+      <DependentUpon>202006290457574_fix_model_ticket.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\MyDatabaseContext.cs" />
@@ -258,6 +263,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202006261627085_Initial.resx">
       <DependentUpon>202006261627085_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006290457574_fix_model_ticket.resx">
+      <DependentUpon>202006290457574_fix_model_ticket.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

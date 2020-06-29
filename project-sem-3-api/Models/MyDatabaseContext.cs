@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using project_sem_3_api.Models;
 
-namespace HelloCorona.Models
+namespace project_sem_3_api.Models
 {
     public class MyDatabaseContext : DbContext
     {

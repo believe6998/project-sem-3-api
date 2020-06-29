@@ -8,7 +8,6 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-using HelloCorona.Models;
 using project_sem_3_api.Models;
 
 namespace project_sem_3_api.Controllers
