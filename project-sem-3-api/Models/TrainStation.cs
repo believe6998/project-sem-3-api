@@ -12,6 +12,7 @@ namespace project_sem_3_api.Models
         public int IdStation { get; set; }
         public int IndexNumber { get; set; }
         public long ArrivalTime { get; set; }
+        public int DistancePreStation { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime? UpdatedAt { get; set; }
         public DateTime? DeletedAt { get; set; }

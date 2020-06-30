@@ -21,7 +21,7 @@ namespace project_sem_3_api.Models
         public DbSet<TrainCarType> TrainCarTypes { get; set; }
         public DbSet<Seat> Seats { get; set; }
         public DbSet<SeatType> SeatTypes { get; set; }
-        // public DbSet<Object> Objects { get; set; }
+        public DbSet<ObjectPassenger> ObjectPassengers { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
 

@@ -5,7 +5,7 @@ using System.Web;
 
 namespace project_sem_3_api.Models
 {
-    public class Object
+    public class ObjectPassenger
     {
         public int Id { get; set; }
         public string Name { get; set; }

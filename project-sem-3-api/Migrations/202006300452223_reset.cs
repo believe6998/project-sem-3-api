@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Initial : DbMigration
+    public partial class reset : DbMigration
     {
         public override void Up()
         {
@@ -67,10 +67,13 @@
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
+                        IdOrder = c.Int(nullable: false),
                         IdSource = c.Int(nullable: false),
                         IdDestination = c.Int(nullable: false),
                         IdTrainCar = c.Int(nullable: false),
                         IdSeat = c.Int(nullable: false),
+                        IdObject = c.Int(nullable: false),
+                        PassengerName = c.String(),
                         IdentityNumber = c.String(),
                         Price = c.Decimal(nullable: false, precision: 18, scale: 2),
                         DepartureDay = c.String(),
@@ -132,6 +135,7 @@
                         IdStation = c.Int(nullable: false),
                         IndexNumber = c.Int(nullable: false),
                         ArrivalTime = c.Long(nullable: false),
+                        DistancePreStation = c.Int(nullable: false),
                         CreatedAt = c.DateTime(nullable: false),
                         UpdatedAt = c.DateTime(),
                         DeletedAt = c.DateTime(),

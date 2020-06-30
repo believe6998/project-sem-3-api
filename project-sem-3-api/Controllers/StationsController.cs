@@ -16,6 +16,11 @@ namespace project_sem_3_api.Controllers
     {
         private MyDatabaseContext db = new MyDatabaseContext();
 
+           [Route("api/stations/all")]
+            public IEnumerable<dynamic> GetAllStations() {
+            return from s in db.Stations select new { s.Id, s.Name };
+             }
+
         // GET: api/Stations
         public IHttpActionResult GetStations(int page = 1, int size = 25, int? status = null, string name = null, string startDate = null, string endDate = null )
         {
