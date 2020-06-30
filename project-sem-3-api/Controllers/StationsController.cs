@@ -54,7 +54,6 @@ namespace project_sem_3_api.Controllers
                 .Skip(skip)
                 .Take(size);
 
-
             // Return the list of customers
             return Ok(new PagedResult<Station>(stations.ToList(), page, size, total));
         }

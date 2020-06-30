@@ -14,7 +14,7 @@ namespace project_sem_3_api.Models
         public int IdDestination { get; set; }
         public int IdTrainCar { get; set; }
         public int IdSeat { get; set; }
-        public int IdObject { get; set; }
+        public int IdObjectPassenger { get; set; }
         public string PassengerName{ get; set; }
         public string IdentityNumber { get; set; }
         public decimal Price { get; set; }
