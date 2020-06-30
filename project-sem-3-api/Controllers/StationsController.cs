@@ -8,7 +8,6 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-using HelloCorona.Models;
 using project_sem_3_api.Models;
 
 namespace project_sem_3_api.Controllers
@@ -25,11 +24,6 @@ namespace project_sem_3_api.Controllers
         // GET: api/Stations
         public IHttpActionResult GetStations(int page = 1, int size = 25, int? status = null, string name = null, string startDate = null, string endDate = null )
         {
-            var skip = (page - 1) * size;
-
-            // Get total number of records
-            var total = db.Stations.Count();
-
             var stations = db.Stations.AsQueryable();
             if (status != null)
             {
@@ -49,13 +43,19 @@ namespace project_sem_3_api.Controllers
                 var tomorrow = Convert.ToDateTime(endDate).AddDays(1);
                 stations = stations.Where(s => s.CreatedAt < tomorrow);
             }
+
+            var skip = (page - 1) * size;
+
+            var total = stations.Count();
+
             // Select the customers based on paging parameters
             stations = stations
                 .OrderBy(c => c.Id)
                 .Skip(skip)
                 .Take(size);
 
-             // Return the list of customers
+
+            // Return the list of customers
             return Ok(new PagedResult<Station>(stations.ToList(), page, size, total));
         }
 

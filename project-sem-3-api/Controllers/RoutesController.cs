@@ -1,5 +1,4 @@
-﻿using HelloCorona.Models;
-using project_sem_3_api.Models;
+﻿using project_sem_3_api.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
