@@ -28,11 +28,13 @@ namespace project_sem_3_api.Controllers
                          join st in db.SeatTypes on tc.IdTrainCarType equals st.IdTrainCarType
                          join s in db.Seats on st.Id equals s.IdSeatType
                          join tk in db.Tickets on new { 
-                             IdSeat = s.Id, 
+                             IdSeat = s.Id,
+                             IdTrainCar = tc.Id,
                              DepartureDay
                          } equals 
                          new { 
                              tk.IdSeat,
+                             IdTrainCar = tk.IdTrainCar,
                              tk.DepartureDay
                          } into tickets
                          from ticket in tickets.DefaultIfEmpty()
@@ -49,7 +51,8 @@ namespace project_sem_3_api.Controllers
                                  endPoint == null || 
                                  startPoint.IndexNumber >= endTs.IndexNumber ||
                                  endPoint.IndexNumber <= startTs.IndexNumber,
-                            s.SeatNo
+                            s.SeatNo,
+                            st.Price
                          };
 
             // Handle case multi route in big route
@@ -59,9 +62,9 @@ namespace project_sem_3_api.Controllers
             {
                 var currentSeat = oldResult[i];
                 var indexSeatExited = newResult.FindIndex(x => x.Id == currentSeat.Id);
-                if (indexSeatExited >= 0 && !currentSeat.EmptySeat)
+                if (indexSeatExited >= 0)
                 {
-                    newResult[indexSeatExited] = currentSeat;
+                    newResult[indexSeatExited] = !currentSeat.EmptySeat ? currentSeat : newResult[indexSeatExited];
                 }
                 else
                 {
