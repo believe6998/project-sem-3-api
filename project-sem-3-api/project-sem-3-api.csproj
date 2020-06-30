@@ -55,6 +55,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="linq2db, Version=1.0.7.4, Culture=neutral, PublicKeyToken=f19f8aed7feff67e, processorArchitecture=MSIL">
+      <HintPath>..\packages\linq2db.1.0.7.4\lib\net45\linq2db.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
@@ -160,6 +163,7 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="WebDriver, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Selenium.WebDriver.3.0.0\lib\net40\WebDriver.dll</HintPath>
+    </Reference>
     <Reference Include="System.Net.Http">
     </Reference>
     <Reference Include="System.Net.Http.WebRequest">
@@ -214,13 +218,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202006300313550_ad.cs" />
-    <Compile Include="Migrations\202006300313550_ad.designer.cs">
-      <DependentUpon>202006300313550_ad.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202006300338051_fix orderId type.cs" />
-    <Compile Include="Migrations\202006300338051_fix orderId type.designer.cs">
-      <DependentUpon>202006300338051_fix orderId type.cs</DependentUpon>
     <Compile Include="Migrations\202006300452223_reset.cs" />
     <Compile Include="Migrations\202006300452223_reset.designer.cs">
       <DependentUpon>202006300452223_reset.cs</DependentUpon>
@@ -342,12 +339,6 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202006300313550_ad.resx">
-      <DependentUpon>202006300313550_ad.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202006300338051_fix orderId type.resx">
-      <DependentUpon>202006300338051_fix orderId type.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202006300452223_reset.resx">
       <DependentUpon>202006300452223_reset.cs</DependentUpon>
     </EmbeddedResource>
