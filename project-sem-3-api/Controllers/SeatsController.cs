@@ -9,7 +9,6 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using System.Web.Mvc;
 using System.Web.WebSockets;
-using HelloCorona.Models;
 using project_sem_3_api.Models;
 
 namespace project_sem_3_api.Controllers
@@ -21,8 +20,8 @@ namespace project_sem_3_api.Controllers
         // GET: api/Seats
         public List<dynamic> GetSeats(int IdTrainCar, int StartTrainStation, int EndTrainStation, string DepartureDay)
         {
-            TrainStation startTs = db.TrainStations.Find(StartTrainStation);
-            TrainStation endTs = db.TrainStations.Find(EndTrainStation);
+            var startTs = db.TrainStations.Find(StartTrainStation);
+            var endTs = db.TrainStations.Find(EndTrainStation);
 
             var result = from tc in db.TrainCars
                          join st in db.SeatTypes on tc.IdTrainCarType equals st.IdTrainCarType

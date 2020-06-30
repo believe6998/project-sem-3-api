@@ -13,8 +13,6 @@ namespace project_sem_3_api.Models
 
             public int Size { get; set; }
 
-            public int PageCount { get; set; }
-
             public long Total { get; set; }
 
         }
@@ -29,10 +27,7 @@ namespace project_sem_3_api.Models
             {
                 Page = page,
                 Size = size,
-                Total = total,
-                PageCount = total > 0
-                    ? (int)Math.Ceiling(total / (double)size)
-                    : 0
+                Total = total
             };
         }
 
