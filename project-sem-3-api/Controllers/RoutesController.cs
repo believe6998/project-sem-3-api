@@ -37,17 +37,13 @@ namespace project_sem_3_api.Controllers
                              }
                              ) on s.TrainId equals e.TrainId
                          join t in db.Trains on s.TrainId equals t.Id
-                         where e.EndTime > s.StartTime
+                         where e.EndIndex > s.StartIndex
                          select new
                          {
                              TrainId = t.Id,
                              TrainCode = t.Code,
-                             s.StartStaion,
-                             e.IdEndStaion,
-                             s.StartIndex,
-                             e.EndIndex,
                              TravelTime = e.EndTime - s.StartTime,
-                             routeDetails = (
+                             Points = (
                                  from ts in db.TrainStations
                                  join st in db.Stations on ts.IdStation equals st.Id
                                  where ts.IdTrain == t.Id
@@ -55,10 +51,10 @@ namespace project_sem_3_api.Controllers
                                  && ts.IndexNumber <= e.EndIndex
                                  select new
                                  {
+                                     IdStation = st.Id,
                                      ts.ArrivalTime,
-                                     st.Name,
-                                     st.Location.Latitude,
-                                     st.Location.Longitude,
+                                     NameStation = st.Name,
+                                     ts.DistancePreStation
                                  }
                            ).ToList()
                          };

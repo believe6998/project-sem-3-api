@@ -14,6 +14,7 @@ namespace project_sem_3_api.Controllers
         private MyDatabaseContext db = new MyDatabaseContext();
 
         // GET api/values
+
         public IHttpActionResult Get()
         {
             // join t in db.Trains on ts.IdTrain equals t.Id
