@@ -8,7 +8,9 @@ using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using System.Web.WebSockets;
+using log4net;
 using project_sem_3_api.Models;
 
 namespace project_sem_3_api.Controllers
@@ -16,12 +18,26 @@ namespace project_sem_3_api.Controllers
     public class SeatsController : ApiController
     {
         private MyDatabaseContext db = new MyDatabaseContext();
+        private static readonly ILog log =
+            LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         // GET: api/Seats
         public List<dynamic> GetSeats(int IdTrainCar, int StartTrainStation, int EndTrainStation, string DepartureDay)
         {
             var startTs = db.TrainStations.Find(StartTrainStation);
             var endTs = db.TrainStations.Find(EndTrainStation);
+
+            var Totaldistance = db.TrainStations
+                        .Where(ts => ts.IdTrain == IdTrainCar
+                                    && ts.IndexNumber <= endTs.IndexNumber
+                                    && ts.IndexNumber >= startTs.IndexNumber
+                        )
+                        .OrderBy(ts => ts.IndexNumber)
+                        .Skip(1)
+                        .Sum(x => x.DistancePreStation);
+
+            Totaldistance = Convert.ToInt32(Totaldistance / 1000);
+
 
             var result = from tc in db.TrainCars
                          join st in db.SeatTypes on tc.IdTrainCarType equals st.IdTrainCarType
@@ -51,7 +67,7 @@ namespace project_sem_3_api.Controllers
                                  startPoint.IndexNumber >= endTs.IndexNumber ||
                                  endPoint.IndexNumber <= startTs.IndexNumber,
                             s.SeatNo,
-                            st.Price
+                            Price= st.Price * Totaldistance
                          };
 
             // Handle case multi route in big route
