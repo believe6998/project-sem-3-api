@@ -9,7 +9,7 @@ namespace project_sem_3_api.Models
     public class Ticket
     {
         public int Id { get; set; }
-        public int IdOrder { get; set; }
+        public long IdOrder { get; set; }
         public int IdSource { get; set; }
         public int IdDestination { get; set; }
         public int IdTrainCar { get; set; }

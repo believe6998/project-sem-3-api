@@ -226,6 +226,14 @@
     <Compile Include="Migrations\202006300458592_update-object.designer.cs">
       <DependentUpon>202006300458592_update-object.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202007031029412_change id order on table tikets to long.cs" />
+    <Compile Include="Migrations\202007031029412_change id order on table tikets to long.designer.cs">
+      <DependentUpon>202007031029412_change id order on table tikets to long.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202007031048133_change_date_to_string_train_train_cả.cs" />
+    <Compile Include="Migrations\202007031048133_change_date_to_string_train_train_cả.designer.cs">
+      <DependentUpon>202007031048133_change_date_to_string_train_train_cả.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\MyDatabaseContext.cs" />
     <Compile Include="Models\ObjectPassenger.cs" />
@@ -344,6 +352,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202006300458592_update-object.resx">
       <DependentUpon>202006300458592_update-object.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007031029412_change id order on table tikets to long.resx">
+      <DependentUpon>202007031029412_change id order on table tikets to long.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007031048133_change_date_to_string_train_train_cả.resx">
+      <DependentUpon>202007031048133_change_date_to_string_train_train_cả.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
