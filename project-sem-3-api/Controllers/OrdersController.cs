@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using Newtonsoft.Json.Linq;
 using project_sem_3_api.Models;
 
 namespace project_sem_3_api.Controllers
@@ -71,18 +72,101 @@ namespace project_sem_3_api.Controllers
         }
 
         // POST: api/Orders
-        [ResponseType(typeof(Order))]
-        public IHttpActionResult PostOrder(Order order)
+        public IHttpActionResult PostOrder(JObject data)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            dynamic jsonData = data;
+            var email = jsonData.email;
+            var name = jsonData.name;
+            var phone = jsonData.phone;
+            var totalPrice = 0;
 
+            var order = new Order
+            {
+                Name = name,
+                Email = email,
+                Phone = phone,
+                TotalPrice = totalPrice
+            };
             db.Orders.Add(order);
             db.SaveChanges();
+            JArray tickets = jsonData.tickets;
 
-            return CreatedAtRoute("DefaultApi", new { id = order.Id }, order);
+            foreach (var item in tickets)
+            {
+                var passengerName = (string)item["name"];
+                var passengerIdentityNumber = (string)item["identityNumber"];
+                var idSeat = (int)item["idSeat"];
+                var departureDay = (string)item["departureDay"];
+                var idTrainCar = (int)item["idTrainCar"];
+                var idSource = (int)item["idSource"];
+                var idDestination = (int)item["idDestination"];
+                var idObject = (int)item["idObject"];
+                var source = db.Stations.Find(idSource);
+                var destination = db.Stations.Find(idDestination);
+                var pricePercent = 0;
+                if (source == null)
+                {
+                    return BadRequest("No sourceId");
+                }
+                if (destination == null)
+                {
+                    return BadRequest("No destinationId");
+                }
+                var distance = Convert.ToInt32(source.Location.Distance(destination.Location));
+                var trainTrainCars = db.TrainTrainCars
+                    .Where(t => t.Date == departureDay)
+                    .FirstOrDefault(t => t.IdTrainCar == idTrainCar);
+                if (trainTrainCars != null)
+                {
+                    pricePercent = trainTrainCars.PricePercent;
+                }
+
+                var seat = db.Seats.Find(idSeat);
+
+                if (seat == null)
+                {
+                    return BadRequest("No seatId");
+                }
+               
+                var seatType = db.SeatTypes.Find(seat.IdSeatType);
+
+                if (seatType == null)
+                {
+                    return BadRequest("Don't have this seat type");
+                }
+
+                var objectPassenger = db.ObjectPassengers.Find(idObject);
+
+                if (objectPassenger == null)
+                {
+                    return BadRequest("No objectId");
+                }
+
+                var distancePrice = seatType.Price * (distance / 1000);
+                var seatPrice = distancePrice + distancePrice * pricePercent - distancePrice * objectPassenger.PricePercent;
+
+                totalPrice += seatPrice;
+
+                var ticket = new Ticket
+                {
+                    IdObjectPassenger = idObject,
+                    IdDestination = idDestination,
+                    IdSource = idSource,
+                    IdOrder = order.Id,
+                    IdTrainCar = idTrainCar,
+                    IdSeat = idSeat,
+                    DepartureDay = departureDay,
+                    Price = seatPrice,
+                    PassengerName = passengerName,
+                    IdentityNumber = passengerIdentityNumber,
+                };
+                db.Tickets.Add(ticket);
+                db.SaveChanges();
+            }
+
+            order.TotalPrice = totalPrice;
+            db.SaveChanges();
+            return StatusCode(HttpStatusCode.OK);
         }
 
         // DELETE: api/Orders/5
