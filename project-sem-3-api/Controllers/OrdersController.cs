@@ -6,6 +6,7 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Newtonsoft.Json.Linq;
@@ -149,6 +150,7 @@ namespace project_sem_3_api.Controllers
 
                 var ticket = new Ticket
                 {
+                    Code = GenCode(12),
                     IdObjectPassenger = idObject,
                     IdDestination = idDestination,
                     IdSource = idSource,
@@ -197,6 +199,22 @@ namespace project_sem_3_api.Controllers
         private bool OrderExists(int id)
         {
             return db.Orders.Count(e => e.Id == id) > 0;
+        }
+
+        private String GenCode(int size)
+        {
+            var random = new Random();
+
+            String source = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345678901234567890123456789";
+
+            StringBuilder re = new StringBuilder();
+
+            for (int i = 0; i < size; i++)
+            {
+                int index = random.Next(source.Length);
+                re.Append(source[index]);
+            }
+            return re.ToString();
         }
     }
 }

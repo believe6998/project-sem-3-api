@@ -55,9 +55,6 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
-    </Reference>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
@@ -208,27 +205,24 @@
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\RoutesController.cs" />
     <Compile Include="Controllers\SeatsController.cs" />
+    <Compile Include="Controllers\TicketsController.cs" />
     <Compile Include="Controllers\TrainCarsController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Controllers\StationsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202006300452223_reset.cs" />
-    <Compile Include="Migrations\202006300452223_reset.designer.cs">
-      <DependentUpon>202006300452223_reset.cs</DependentUpon>
+    <Compile Include="Migrations\202007031546574_reset.cs" />
+    <Compile Include="Migrations\202007031546574_reset.designer.cs">
+      <DependentUpon>202007031546574_reset.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202006300458592_update-object.cs" />
-    <Compile Include="Migrations\202006300458592_update-object.designer.cs">
-      <DependentUpon>202006300458592_update-object.cs</DependentUpon>
+    <Compile Include="Migrations\202007040629044_gen-code-ticket.cs" />
+    <Compile Include="Migrations\202007040629044_gen-code-ticket.designer.cs">
+      <DependentUpon>202007040629044_gen-code-ticket.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202007031029412_change id order on table tikets to long.cs" />
-    <Compile Include="Migrations\202007031029412_change id order on table tikets to long.designer.cs">
-      <DependentUpon>202007031029412_change id order on table tikets to long.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202007031048133_change_date_to_string_train_train_cả.cs" />
-    <Compile Include="Migrations\202007031048133_change_date_to_string_train_train_cả.designer.cs">
-      <DependentUpon>202007031048133_change_date_to_string_train_train_cả.cs</DependentUpon>
+    <Compile Include="Migrations\202007040657420_update-code-ticket.cs" />
+    <Compile Include="Migrations\202007040657420_update-code-ticket.designer.cs">
+      <DependentUpon>202007040657420_update-code-ticket.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\MyDatabaseContext.cs" />
@@ -291,6 +285,7 @@
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\undifinedtrain - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Models\seed.sql" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -314,7 +309,17 @@
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202007031546574_reset.resx">
+      <DependentUpon>202007031546574_reset.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007040629044_gen-code-ticket.resx">
+      <DependentUpon>202007040629044_gen-code-ticket.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007040657420_update-code-ticket.resx">
+      <DependentUpon>202007040657420_update-code-ticket.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
   </ItemGroup>
@@ -343,20 +348,6 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202006300452223_reset.resx">
-      <DependentUpon>202006300452223_reset.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202006300458592_update-object.resx">
-      <DependentUpon>202006300458592_update-object.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007031029412_change id order on table tikets to long.resx">
-      <DependentUpon>202007031029412_change id order on table tikets to long.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007031048133_change_date_to_string_train_train_cả.resx">
-      <DependentUpon>202007031048133_change_date_to_string_train_train_cả.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

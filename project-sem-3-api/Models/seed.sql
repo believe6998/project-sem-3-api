@@ -1,4 +1,4 @@
-﻿set IDENTITY_INSERT Stations ON;
+set IDENTITY_INSERT Stations ON;
 
 TRUNCATE TABLE Stations;
 insert into Stations (Id, Name, Status, Location, CreatedAt) 
@@ -124,12 +124,12 @@ set IDENTITY_INSERT SeatTypes ON;
 TRUNCATE TABLE SeatTypes;
 insert into SeatTypes (Id, IdTrainCarType, Name, Price, Status, CreatedAt) 
 values
-(1, 1, 'Ghế Thường 1', 1600, 1, '6/20/2020'),
-(2, 1, 'Ghế đặc biệt 1', 1400, 1, '6/20/2020'),
-(3, 2, 'Ghế Thường 2', 1800, 1, '6/20/2020'),
-(4, 2, 'Ghế đặc biệt 2', 2000, 1, '6/20/2020'),
-(5, 3, 'Tầng 1', 3000, 1, '6/20/2020'),
-(6, 3, 'Tầng 2', 2500, 1, '6/20/2020');
+(1, 1, 'Gh? Thu?ng 1', 1600, 1, '6/20/2020'),
+(2, 1, 'Gh? d?c bi?t 1', 1400, 1, '6/20/2020'),
+(3, 2, 'Gh? Thu?ng 2', 1800, 1, '6/20/2020'),
+(4, 2, 'Gh? d?c bi?t 2', 2000, 1, '6/20/2020'),
+(5, 3, 'T?ng 1', 3000, 1, '6/20/2020'),
+(6, 3, 'T?ng 2', 2500, 1, '6/20/2020');
 
 set IDENTITY_INSERT SeatTypes OFF;
 
@@ -319,15 +319,15 @@ set IDENTITY_INSERT Orders ON;
 TRUNCATE TABLE Orders;
 insert into Orders (Id, TotalPrice, Email, Name, Phone) 
 values 
-(1, 1000000, 'test1@gmail.com', 'Hoài Nam', '02323489'),
-(2, 1200000, 'test2@gmail.com', 'Dương Phú', '02342347')
+(1, 1000000, 'test1@gmail.com', 'Ho�i Nam', '02323489'),
+(2, 1200000, 'test2@gmail.com', 'Duong Ph�', '02342347')
 set IDENTITY_INSERT Orders OFF;
 
 TRUNCATE TABLE Tickets;
-insert into Tickets (IdSource, IdDestination, IdTrainCar, IdSeat, IdOrder, IdObjectPassenger, PassengerName, IdentityNumber, Price, DepartureDay, Status, CreatedAt) 
+insert into Tickets (Code, IdSource, IdDestination, IdTrainCar, IdSeat, IdOrder, IdObjectPassenger, PassengerName, IdentityNumber, Price, DepartureDay, Status, CreatedAt) 
 values 
-(1, 2, 1, 64, 1, 1, 'Hoài Nam', 'TDST', 75000, '30/06/2020', 1, '6/20/2020'),
-(3, 5, 1, 69, 1, 2, 'Hoài Nam1',  'TDST', 75000, '30/06/2020', 1, '6/20/2020'),
-(1, 2, 1, 66, 2, 3, 'Hoài Nam2',  'TDST', 75000, '30/06/2020', 1, '6/20/2020'),
-(1, 2, 1, 67, 2, 1, 'Hoài Nam',  'TDST', 75000, '30/06/2020', 1, '6/20/2020')
+('QEzJyajzWAEj', 1, 2, 1, 64, 1, 1, 'Ho�i Nam', '098657678', 75000, '04-07-2020', 1, '6/20/2020'),
+('7LAz7fAv5183', 3, 5, 1, 69, 1, 2, 'Ho�i Nam1', '098657678', 75000, '04-07-2020', 1, '6/20/2020'),
+('jJEwjf16Vh42', 1, 2, 1, 66, 2, 3, 'Ho�i Nam2', '21/12/2010', 75000, '04-07-2020', 1, '6/20/2020'),
+('Oxj9teYtZk0L', 1, 2, 1, 67, 2, 1, 'Ho�i Nam',  '09786', 75000, '04-07-2020', 1, '6/20/2020')
 

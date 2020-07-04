@@ -3,16 +3,16 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class changeidorderontabletiketstolong : DbMigration
+    public partial class gencodeticket : DbMigration
     {
         public override void Up()
         {
-            AlterColumn("dbo.Tickets", "IdOrder", c => c.Long(nullable: false));
+            AddColumn("dbo.Orders", "Code", c => c.String());
         }
         
         public override void Down()
         {
-            AlterColumn("dbo.Tickets", "IdOrder", c => c.Int(nullable: false));
+            DropColumn("dbo.Orders", "Code");
         }
     }
 }
