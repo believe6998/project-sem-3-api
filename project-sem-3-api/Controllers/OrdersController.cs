@@ -69,7 +69,7 @@ namespace project_sem_3_api.Controllers
             }
             if (maxPrice != null)
             {
-                orders = orders.Where(s => s.TotalPrice >= maxPrice);
+                orders = orders.Where(s => s.TotalPrice <= maxPrice);
             }
             var skip = (page - 1) * size;
 
