@@ -7,13 +7,13 @@ namespace project_sem_3_api.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class change_date_to_string_train_train_cả : IMigrationMetadata
+    public sealed partial class gencodeticket : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(change_date_to_string_train_train_cả));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(gencodeticket));
         
         string IMigrationMetadata.Id
         {
-            get { return "202007031048133_change_date_to_string_train_train_cả"; }
+            get { return "202007040629044_gen-code-ticket"; }
         }
         
         string IMigrationMetadata.Source

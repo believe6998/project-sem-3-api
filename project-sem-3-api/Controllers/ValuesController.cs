@@ -1,11 +1,17 @@
-﻿using LinqToDB;
-using project_sem_3_api.Models;
+﻿using project_sem_3_api.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web.Http;
 using Newtonsoft.Json.Linq;
+using System.Text;
+using System.Net;
+using System.IO;
+using System.Web.Mvc;
+using System.Net.Mail;
+using System.Web;
+using System.Web.Routing;
 
 namespace project_sem_3_api.Controllers
 {
@@ -15,60 +21,82 @@ namespace project_sem_3_api.Controllers
 
         // GET api/values
 
-        public IHttpActionResult Get()
+        public String Get()
         {
-            // join t in db.Trains on ts.IdTrain equals t.Id
-            // join s in db.Stations on ts.IdStation equals s.Id
-            //var result = from s in (
-            //                from s1 in db.TrainStations.Cast<TrainStation>()
-            //                where s1.IdStation == StartStation
-            //                select new
-            //                {
-            //                    TrainId = s1.IdTrain,
-            //                    StartStaion = s1.IdStation,
-            //                    StartTime = s1.ArrivalTime,
-            //                    StartIndex = s1.IndexNumber
-            //                }
-            //            )
-            //             join e in (
-            //                 from e1 in db.TrainStations.Cast<TrainStation>()
-            //                 where e1.IdStation == EndStation
-            //                 select new
-            //                 {
-            //                     TrainId = e1.IdTrain,
-            //                     IdEndStaion = e1.IdStation,
-            //                     EndTime = e1.ArrivalTime,
-            //                     EndIndex = e1.IndexNumber
-            //                 }
-            //                 ) on s.TrainId equals e.TrainId
-            //             join t in db.Trains on s.TrainId equals t.Id
-            //             where e.EndTime > s.StartTime
-            //             select new
-            //             {
-            //                 TrainId = t.Id,
-            //                 TrainCode = t.Code,
-            //                 s.StartStaion,
-            //                 e.IdEndStaion,
-            //                 s.StartIndex,
-            //                 e.EndIndex,
-            //                 TravelTime = e.EndTime - s.StartTime,
-            //                 routeDetails = (
-            //                     from ts in db.TrainStations
-            //                     join st in db.Stations on ts.IdStation equals st.Id
-            //                     where ts.IdTrain == t.Id
-            //                     && ts.IndexNumber >= s.StartIndex
-            //                     && ts.IndexNumber <= e.EndIndex
-            //                     select new
-            //                     {
-            //                         ts.ArrivalTime,
-            //                         st.Name,
-            //                         st.Location.Latitude,
-            //                         st.Location.Longitude,
-            //                     }
-            //               ).ToList()
-            //             };
-            return Ok();
+            var a = new Test1 { 
+                Name = "Hello Phú Đẹp Trai"
+            };
+
+            String body = RenderViewToString("Values", "~/Views/SendMail/MailTemplate.cshtml", a);
+            return body;
         }
+
+        public static string RenderViewToString(string controllerName, string viewName, object viewData)
+        {
+            using (var writer = new StringWriter())
+            {
+                var context = HttpContext.Current;
+                var contextBase = new HttpContextWrapper(context);
+                var routeData = new RouteData();
+                routeData.Values.Add("controller", controllerName);
+                var controllerContext = new ControllerContext(contextBase,
+                                                             routeData,
+                                                             new EmptyController()); var razorViewEngine = new RazorViewEngine();
+                var razorViewResult = razorViewEngine.FindView(controllerContext, viewName, "", false);
+
+                var viewContext = new ViewContext(controllerContext, razorViewResult.View, new ViewDataDictionary(viewData), new TempDataDictionary(), writer);
+                razorViewResult.View.Render(viewContext, writer);
+                return writer.ToString();
+            }
+        }
+
+
+        private void SendMail (String address, String message)
+        {
+            try
+            {
+                string email = "duongphu176@gmail.com";
+                string password = "uikkbmtjpcjvmpzs";
+
+                var loginInfo = new NetworkCredential(email, password);
+                var msg = new MailMessage();
+                var smtpClient = new SmtpClient("smtp.gmail.com", 587);
+
+                msg.From = new MailAddress(email);
+                msg.To.Add(new MailAddress(address));
+                msg.Subject = "Created order successfully";
+                msg.Body = message;
+                msg.IsBodyHtml = true;
+
+                smtpClient.EnableSsl = true;
+                smtpClient.UseDefaultCredentials = false;
+                smtpClient.Credentials = loginInfo;
+                smtpClient.Send(msg);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        private String GenCode(int size)
+        {
+            var random = new Random();
+
+            String source = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345678901234567890123456789";
+
+            StringBuilder re = new StringBuilder();
+
+            for (int i = 0; i < size; i++)
+            {
+                int index = random.Next(source.Length);
+                re.Append(source[index]);
+            }
+            return re.ToString();
+        }
+
+
 
         // GET api/values/5
         public string Get(int id)

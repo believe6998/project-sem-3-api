@@ -1,0 +1,235 @@
+﻿@model project_sem_3_api.Models.OrderDto
+
+@{
+    Layout = null;
+}
+
+<body>
+    <div style="background-color: #f8f8f8;
+      font-family: 'Roboto', sans-serif;">
+        <div style="margin: 0 auto;
+              min-width: 500px;
+              max-width: 800px;
+              background-color: white;
+              /*padding: 10px 20px;*/
+              box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.15);
+              border-radius: 10px;">
+            <div style="text-align: center; background-color: #3da000; height: 80px; vertical-align: center; border-radius: 10px 10px 0 0">
+                <h3 style="font-size: 24px; color: white; margin: 0; line-height: 80px">
+                    Create order successfully
+                </h3>
+            </div>
+            <div style="margin: 30px 0">
+                <table style="margin: 0 auto; border-collapse: collapse; width: 100%" ;>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 8px 0;">Customer name</td>
+                            <td style="padding: 8px 0;">@Model.Name</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px 0;">Email</td>
+                            <td style="padding: 8px 0;">@Model.Email</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px 0;">Phone</td>
+                            <td style="padding: 8px 0;">@Model.Phone</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px 0;">Status order</td>
+                            <td style="padding: 8px 0;">@Model.StatusString</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            @if (@Model.Status == 1)
+            {
+                <div style="width: 500px; margin: 0 auto">
+                    <small style="font-style: italic">
+                        Please pay before @Model.Expired
+                    </small>
+                </div>
+            }
+            <div style="padding-bottom: 20px">
+                @foreach (var ticket in @Model.TicketDtos)
+                {
+
+                    <div style="margin: 30px auto;
+                  max-width: 500px;
+                  max-height: 200px;
+                  /* overflow: hidden; */
+                  /* box-shadow: 0 0 10px rgb(202, 202, 204, 0.2); */
+                  border-radius: 2px;
+                  background-color: rgba(231, 231, 231, 0.6);
+                  display: flex;
+                  align-items: center;">
+                        <div style="padding: 10px;">
+                            <img width="100"
+                                 src="https://store-images.s-microsoft.com/image/apps.33967.13510798887182917.246b0a3d-c3cc-46fc-9cea-021069d15c09.392bf5f5-ade4-4b36-aa63-bb15d5c3817a"
+                                 alt="">
+                        </div>
+                        <div class="my_custom_ink" style="border-left: 2px dashed #fff;
+                              height: 200px;
+                              width: 1px;
+                              position: relative;"></div>
+                        <div style="padding: 0 26px;">
+                            <table style="width: 500px;">
+                                <tr>
+                                    <td style="font-size: 0.6em;
+                    font-weight: 300;
+                    color: #656565;
+                    font-family: 'Roboto', sans-serif;
+                    text-transform: uppercase;
+                    letter-spacing: 1px;">
+                                        Code
+                                    </td>
+                                    <td style="font-size: 0.8em;
+                font-weight: 400;
+                letter-spacing: 0.5px;
+                padding: 4px 0 4px;
+                text-transform: uppercase;">
+                                        @ticket.Code
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 0.6em; font-weight: 300; color: #656565; font-family: 'Roboto', sans-serif; text-transform: uppercase; letter-spacing: 1px;">
+                                        Passenger
+                                    </td>
+                                    <td style="font-size: 0.8em;
+                font-weight: 400;
+                letter-spacing: 0.5px;
+                padding: 4px 0 4px;
+                text-transform: uppercase;">
+                                        @ticket.PassengerName
+                                    </td>
+                                </tr>
+                            </table>
+                            <div style="display: flex; justify-content: space-between;">
+                                <table style="width: 100%;">
+                                    <tbody>
+                                        <tr>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size: 0.6em;
+                              font-weight: 300;
+                              color: #656565;
+                              font-family: 'Roboto', sans-serif;
+                              letter-spacing: 1px;padding: 8px 0;">
+                                                From
+                                            </td>
+                                            <td class="tdata ml" style="padding: 8px 0;">
+                                                @ticket.Source
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size: 0.6em;
+                              font-weight: 300;
+                              color: #656565;
+                              font-family: 'Roboto', sans-serif;
+                              letter-spacing: 1px;padding: 8px 0;">
+                                                To
+                                            </td>
+                                            <td class="tdata ml" style="padding: 8px 0;">
+                                                @ticket.Destination
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table style="width: 100%;">
+                                    <tbody>
+                                        <tr>
+                                            <td style="font-size: 0.6em;
+                              font-weight: 300;
+                              color: #656565;
+                              font-family: 'Roboto', sans-serif;
+                              white-space: nowrap;
+                              letter-spacing: 1px;padding: 8px 0;">
+                                                Date
+                                            </td>
+                                            <td class="tdata ml" style="padding: 8px 0; white-space: nowrap;">
+                                                @ticket.DepartureDay
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size: 0.6em;
+                              font-weight: 300;
+                              color: #656565;
+                              font-family: 'Roboto', sans-serif;
+                              letter-spacing: 1px;padding: 8px 0;">
+                                                Price
+                                            </td>
+                                            <td class="tdata ml" style="padding: 8px 0;">
+                                                @ticket.Price
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td style="font-size: 0.6em;
+                font-weight: 300;
+                color: #656565;
+                font-family: 'Roboto', sans-serif;
+                text-transform: uppercase;
+                letter-spacing: 1px;padding: 8px 0;">
+                                        Train
+                                    </td>
+                                    <td style="font-size: 0.6em;
+                font-weight: 300;
+                color: #656565;
+                font-family: 'Roboto', sans-serif;
+                text-transform: uppercase;
+                letter-spacing: 1px;padding: 8px 0;">
+                                        Coach
+                                    </td>
+                                    <td style="font-size: 0.6em;
+                font-weight: 300;
+                color: #656565;
+                font-family: 'Roboto', sans-serif;
+                text-transform: uppercase;
+                letter-spacing: 1px;padding: 8px 0;">
+                                        Class
+                                    </td>
+                                    <td style="font-size: 0.6em;
+                font-weight: 300;
+                color: #656565;
+                font-family: 'Roboto', sans-serif;
+                text-transform: uppercase;
+                letter-spacing: 1px;padding: 8px 0;">
+                                        Seat
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 0.8em;
+                font-weight: 400;
+                letter-spacing: 0.5px;
+                padding: 4px 0 4px;">
+                                        @ticket.CodeTrain
+                                    </td>
+                                    <td style="font-size: 0.8em;
+                font-weight: 400;
+                letter-spacing: 0.5px;
+                padding: 4px 0 4px;">
+                                        @ticket.TrainCarNumber
+                                    </td>
+                                    <td style="font-size: 0.8em;
+                font-weight: 400;
+                letter-spacing: 0.5px;
+                padding: 4px 0 4px;">
+                                        @ticket.TrainCarType
+                                    </td>
+                                    <td style="font-size: 0.8em;
+                font-weight: 400;
+                letter-spacing: 0.5px;
+                padding: 4px 0 4px;">
+                                        @ticket.SeatNumber
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</body>

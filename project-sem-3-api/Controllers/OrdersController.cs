@@ -5,12 +5,17 @@ using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Mail;
+using System.Text;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
-using LinqToDB.DataProvider.Informix;
+using System.Web.Mvc;
+using System.Web.Routing;
 using Newtonsoft.Json.Linq;
 using project_sem_3_api.Models;
 
@@ -96,6 +101,7 @@ namespace project_sem_3_api.Controllers
                 join o in db.ObjectPassengers on t.IdObjectPassenger equals o.Id
                 select new
                 {
+                    Code = t.Code,
                     PassengerName = t.PassengerName,
                     IdentityNumber = t.IdentityNumber,
                     Train = tr.Code,
@@ -166,6 +172,8 @@ namespace project_sem_3_api.Controllers
             db.SaveChanges();
             JArray tickets = jsonData.tickets;
 
+            var ticketDtos = new List<TicketDto>();
+
             foreach (var item in tickets)
             {
                 var passengerName = (string)item["name"];
@@ -178,6 +186,9 @@ namespace project_sem_3_api.Controllers
                 var idObject = (int)item["idObject"];
                 var source = db.Stations.Find(idSource);
                 var destination = db.Stations.Find(idDestination);
+                var trainCar = db.TrainCars.Find(idTrainCar);
+                var trainCartype = db.TrainCarTypes.Find(trainCar.IdTrainCarType);
+                var train = db.Trains.Find(trainCar.IdTrain);
                 var pricePercent = 0;
                 if (source == null)
                 {
@@ -224,6 +235,7 @@ namespace project_sem_3_api.Controllers
 
                 var ticket = new Ticket
                 {
+                    Code = GenCode(12),
                     IdObjectPassenger = idObject,
                     IdDestination = idDestination,
                     IdSource = idSource,
@@ -235,14 +247,94 @@ namespace project_sem_3_api.Controllers
                     PassengerName = passengerName,
                     IdentityNumber = passengerIdentityNumber,
                 };
+
+                var ticketDto = new TicketDto
+                {
+                    Code = ticket.Code,
+                    CodeTrain = train.Code,
+                    TrainCarType = trainCartype.Name,
+                    ObjectPassenger = objectPassenger.Name,
+                    Source = source.Name,
+                    Destination = destination.Name,
+                    TrainCarNumber = trainCar.IndexNumber.ToString(),
+                    SeatNumber = seat.SeatNo.ToString(),
+                    DepartureDay = departureDay,
+                    Price = seatPrice,
+                    PassengerName = passengerName,
+                    IdentityNumber = passengerIdentityNumber,
+                    Status = ticket.Status
+                };
+
+                ticketDtos.Add(ticketDto);
                 db.Tickets.Add(ticket);
                 db.SaveChanges();
             }
 
             order.TotalPrice = totalPrice;
             db.SaveChanges();
+            OrderDto orderDto = new OrderDto
+            {
+                Name = order.Name,
+                Email = order.Email,
+                Phone = order.Phone,
+                TicketDtos = ticketDtos,
+                Status = order.Status
+            };
+
+            String message = RenderViewToString("Orders", "~/Views/SendMail/MailTemplate.cshtml", orderDto);
+
+            SendMail("dekujzy@gmail.com", message);
+
             return StatusCode(HttpStatusCode.OK);
         }
+
+        public static string RenderViewToString(string controllerName, string viewName, object viewData)
+        {
+            using (var writer = new StringWriter())
+            {
+                var context = HttpContext.Current;
+                var contextBase = new HttpContextWrapper(context);
+                var routeData = new RouteData();
+                routeData.Values.Add("controller", controllerName);
+                var controllerContext = new ControllerContext(contextBase,
+                                                             routeData,
+                                                             new EmptyController()); var razorViewEngine = new RazorViewEngine();
+                var razorViewResult = razorViewEngine.FindView(controllerContext, viewName, "", false);
+
+                var viewContext = new ViewContext(controllerContext, razorViewResult.View, new ViewDataDictionary(viewData), new TempDataDictionary(), writer);
+                razorViewResult.View.Render(viewContext, writer);
+                return writer.ToString();
+            }
+        }
+
+        private void SendMail(String address, String message)
+        {
+            try
+            {
+                string email = "duongphu176@gmail.com";
+                string password = "uikkbmtjpcjvmpzs";
+
+                var loginInfo = new NetworkCredential(email, password);
+                var msg = new MailMessage();
+                var smtpClient = new SmtpClient("smtp.gmail.com", 587);
+
+                msg.From = new MailAddress(email);
+                msg.To.Add(new MailAddress(address));
+                msg.Subject = "Created order successfully";
+                msg.Body = message;
+                msg.IsBodyHtml = true;
+
+                smtpClient.EnableSsl = true;
+                smtpClient.UseDefaultCredentials = false;
+                smtpClient.Credentials = loginInfo;
+                smtpClient.Send(msg);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
 
         // DELETE: api/Orders/5
         [ResponseType(typeof(Order))]
@@ -274,5 +366,26 @@ namespace project_sem_3_api.Controllers
         {
             return db.Orders.Count(e => e.Id == id) > 0;
         }
+
+        private String GenCode(int size)
+        {
+            var random = new Random();
+
+            String source = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345678901234567890123456789";
+
+            StringBuilder re = new StringBuilder();
+
+            for (int i = 0; i < size; i++)
+            {
+                int index = random.Next(source.Length);
+                re.Append(source[index]);
+            }
+            return re.ToString();
+        }
+    }
+
+    class EmptyController : ControllerBase
+    {
+        protected override void ExecuteCore() { }
     }
 }
