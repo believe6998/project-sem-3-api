@@ -19,7 +19,6 @@ namespace project_sem_3_api.Controllers
         // GET: api/Tickets
         public dynamic GetTickets(String Code, String IdentityNumber, String DepartureDay)
         {
-            // ).FirstOrDefault(x => x.Code == Code && x.IdentityNumber == IdentityNumber && x.DepartureDay == DepartureDay);
             var result = (from tk in db.Tickets
                          join source in db.TrainStations on tk.IdSource equals source.Id
                          join statinSource in db.Stations on source.IdStation equals statinSource.Id

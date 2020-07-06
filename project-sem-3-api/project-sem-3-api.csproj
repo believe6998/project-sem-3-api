@@ -205,6 +205,7 @@
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\RoutesController.cs" />
     <Compile Include="Controllers\SeatsController.cs" />
+    <Compile Include="Controllers\SendMailController.cs" />
     <Compile Include="Controllers\TicketsController.cs" />
     <Compile Include="Controllers\TrainCarsController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -224,14 +225,20 @@
     <Compile Include="Migrations\202007040657420_update-code-ticket.designer.cs">
       <DependentUpon>202007040657420_update-code-ticket.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202007061735534_order.cs" />
+    <Compile Include="Migrations\202007061735534_order.designer.cs">
+      <DependentUpon>202007061735534_order.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\MyDatabaseContext.cs" />
     <Compile Include="Models\ObjectPassenger.cs" />
     <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\OrderDto.cs" />
     <Compile Include="Models\PagedResult.cs" />
     <Compile Include="Models\Seat.cs" />
     <Compile Include="Models\SeatType.cs" />
     <Compile Include="Models\Station.cs" />
+    <Compile Include="Models\Test1.cs" />
     <Compile Include="Models\Ticket.cs" />
     <Compile Include="Models\Train.cs" />
     <Compile Include="Models\TrainCar.cs" />
@@ -308,6 +315,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+    <Content Include="Views\SendMail\MailTemplate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202007031546574_reset.resx">
@@ -318,6 +326,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202007040657420_update-code-ticket.resx">
       <DependentUpon>202007040657420_update-code-ticket.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007061735534_order.resx">
+      <DependentUpon>202007061735534_order.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -349,6 +360,7 @@
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

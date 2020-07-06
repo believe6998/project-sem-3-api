@@ -323,11 +323,11 @@ values
 (2, 1200000, 'test2@gmail.com', 'Duong Phú', '02342347')
 set IDENTITY_INSERT Orders OFF;
 
-TRUNCATE TABLE Tickets;
-insert into Tickets (Code, IdSource, IdDestination, IdTrainCar, IdSeat, IdOrder, IdObjectPassenger, PassengerName, IdentityNumber, Price, DepartureDay, Status, CreatedAt) 
-values 
-('QEzJyajzWAEj', 1, 2, 1, 64, 1, 1, 'Hoài Nam', '098657678', 75000, '04-07-2020', 1, '6/20/2020'),
-('7LAz7fAv5183', 3, 5, 1, 69, 1, 2, 'Hoài Nam1', '098657678', 75000, '04-07-2020', 1, '6/20/2020'),
-('jJEwjf16Vh42', 1, 2, 1, 66, 2, 3, 'Hoài Nam2', '21/12/2010', 75000, '04-07-2020', 1, '6/20/2020'),
-('Oxj9teYtZk0L', 1, 2, 1, 67, 2, 1, 'Hoài Nam',  '09786', 75000, '04-07-2020', 1, '6/20/2020')
+--TRUNCATE TABLE Tickets;
+--insert into Tickets (Code, IdSource, IdDestination, IdTrainCar, IdSeat, IdOrder, IdObjectPassenger, PassengerName, IdentityNumber, Price, DepartureDay, Status, CreatedAt) 
+--values 
+--('QEzJyajzWAEj', 1, 2, 1, 64, 1, 1, 'Hoài Nam', '098657678', 75000, '04-07-2020', 1, '6/20/2020'),
+--('7LAz7fAv5183', 3, 5, 1, 69, 1, 2, 'Hoài Nam1', '098657678', 75000, '04-07-2020', 1, '6/20/2020'),
+--('jJEwjf16Vh42', 1, 2, 1, 66, 2, 3, 'Hoài Nam2', '21/12/2010', 75000, '04-07-2020', 1, '6/20/2020'),
+--('Oxj9teYtZk0L', 1, 2, 1, 67, 2, 1, 'Hoài Nam',  '09786', 75000, '04-07-2020', 1, '6/20/2020')
 
