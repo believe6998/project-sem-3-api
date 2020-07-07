@@ -62,9 +62,9 @@ set IDENTITY_INSERT TrainCarTypes ON;
 TRUNCATE TABLE TrainCarTypes;
 insert into TrainCarTypes (Id, Code, Name, Status, CreatedAt) 
 values 
-(1, 'TCT-1', 'Loại thường', 1, '6/20/2020'),
-(2, 'TCT-2', 'Điều hoà các thứ', 1, '6/20/2020'),
-(3, 'TCT-3', 'Giường nằm luôn', 1, '6/20/2020')
+(1, 'TCT-1', 'AC', 1, '6/20/2020'),
+(2, 'TCT-2', 'First Class', 1, '6/20/2020'),
+(3, 'TCT-3', 'Sleeper Class', 1, '6/20/2020')
 set IDENTITY_INSERT TrainCarTypes OFF;
 
 set IDENTITY_INSERT TrainCars ON;
@@ -124,12 +124,12 @@ set IDENTITY_INSERT SeatTypes ON;
 TRUNCATE TABLE SeatTypes;
 insert into SeatTypes (Id, IdTrainCarType, Name, Price, Status, CreatedAt) 
 values
-(1, 1, 'Ghế Thường 1', 1600, 1, '6/20/2020'),
-(2, 1, 'Ghế đặc biệt 1', 1400, 1, '6/20/2020'),
-(3, 2, 'Ghế Thường 2', 1800, 1, '6/20/2020'),
-(4, 2, 'Ghế đặc biệt 2', 2000, 1, '6/20/2020'),
-(5, 3, 'Tầng 1', 3000, 1, '6/20/2020'),
-(6, 3, 'Tầng 2', 2500, 1, '6/20/2020');
+(1, 1, 'Gh? Thu?ng 1', 1600, 1, '6/20/2020'),
+(2, 1, 'Gh? d?c bi?t 1', 1400, 1, '6/20/2020'),
+(3, 2, 'Gh? Thu?ng 2', 1800, 1, '6/20/2020'),
+(4, 2, 'Gh? d?c bi?t 2', 2000, 1, '6/20/2020'),
+(5, 3, 'T?ng 1', 3000, 1, '6/20/2020'),
+(6, 3, 'T?ng 2', 2500, 1, '6/20/2020');
 
 set IDENTITY_INSERT SeatTypes OFF;
 
@@ -306,30 +306,28 @@ values
 (49, 6, 1, '06/20/2020'),
 (50, 6, 1, '06/20/2020');
 
-set IDENTITY_INSERT ObjectPassengers ON;
+set IDENTITY_INSERT ObjectPassengers ON;	
 TRUNCATE TABLE ObjectPassengers;
 insert into ObjectPassengers (Id, Name, PricePercent) 
 values 
-(1, 'Người lớn', 0.01),
-(2, 'Trẻ con', 0.005),
-(3, 'Sinh viên', 0.008)
+(1, 'Adult', 0),
+(2, 'Child', 20),
+(3, 'Student', 10)
 set IDENTITY_INSERT ObjectPassengers OFF;
 
-set IDENTITY_INSERT Orders ON;
-TRUNCATE TABLE Orders;
-insert into Orders (Id, TotalPrice, Email, Name, Phone) 
-values 
-(1, 1000000, 'test1@gmail.com', 'Hoài Nam', '02323489'),
-(2, 1200000, 'test2@gmail.com', 'Dương Phú', '02342347')
-set IDENTITY_INSERT Orders OFF;
+--set IDENTITY_INSERT Orders ON;
+--TRUNCATE TABLE Orders;
+--insert into Orders (Id, TotalPrice, Email, Name, Phone) 
+--values 
+--(1, 1000000, 'test1@gmail.com', 'Hoài Nam', '02323489'),
+--(2, 1200000, 'test2@gmail.com', 'Duong Phú', '02342347')
+--set IDENTITY_INSERT Orders OFF;
 
-TRUNCATE TABLE Tickets;
-insert into Tickets (IdSource, IdDestination, IdTrainCar, IdSeat, IdOrder, IdObject, PassengerName, IdentityNumber, Price, DepartureDay, Status, CreatedAt) 
-values 
-(1, 2, 1, 64, 1, 1, 'Hoài Nam', 'TDST', 75000, '30/06/2020', 1, '6/20/2020'),
-(3, 5, 1, 69, 1, 2, 'Hoài Nam1',  'TDST', 75000, '30/06/2020', 1, '6/20/2020'),
-(1, 2, 1, 66, 2, 3, 'Hoài Nam2',  'TDST', 75000, '30/06/2020', 1, '6/20/2020'),
-(1, 2, 1, 67, 2, 1, 'Hoài Nam',  'TDST', 75000, '30/06/2020', 1, '6/20/2020')
-
-
+--TRUNCATE TABLE Tickets;
+--insert into Tickets (Code, IdSource, IdDestination, IdTrainCar, IdSeat, IdOrder, IdObjectPassenger, PassengerName, IdentityNumber, Price, DepartureDay, Status, CreatedAt) 
+--values 
+--('QEzJyajzWAEj', 1, 2, 1, 64, 1, 1, 'Hoài Nam', '098657678', 75000, '04-07-2020', 1, '6/20/2020'),
+--('7LAz7fAv5183', 3, 5, 1, 69, 1, 2, 'Hoài Nam1', '098657678', 75000, '04-07-2020', 1, '6/20/2020'),
+--('jJEwjf16Vh42', 1, 2, 1, 66, 2, 3, 'Hoài Nam2', '21/12/2010', 75000, '04-07-2020', 1, '6/20/2020'),
+--('Oxj9teYtZk0L', 1, 2, 1, 67, 2, 1, 'Hoài Nam',  '09786', 75000, '04-07-2020', 1, '6/20/2020')
 
