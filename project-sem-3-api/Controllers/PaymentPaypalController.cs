@@ -27,5 +27,21 @@ namespace project_sem_3_api.Controllers
             db.SaveChanges();
             return View("Success", order);
         }
+
+        public ActionResult CheckRedirect()
+        {
+            String urlPaypal = Request.Params.Get("Ref");
+            int ỎderId = Convert.ToInt32(Request.Params.Get("OrderId"));
+            Order order = db.Orders.Find(ỎderId);
+
+            if (order.Status != 1 || order == null)
+            {
+                ViewBag.Status = order.Status;
+             
+                return View("Check", order);
+            }
+
+            return Redirect(urlPaypal);
+        }
     }
 }

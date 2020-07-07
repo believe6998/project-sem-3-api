@@ -348,6 +348,7 @@
     <Content Include="Views\SendMail\MailTemplate.cshtml" />
     <Content Include="Views\PaymentPaypal\Success.cshtml" />
     <Content Include="Views\PaymentPaypal\Failure.cshtml" />
+    <Content Include="Views\PaymentPaypal\Check.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202007031546574_reset.resx">

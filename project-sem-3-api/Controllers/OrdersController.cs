@@ -287,23 +287,22 @@ namespace project_sem_3_api.Controllers
             };
 
             APIContext apiContext = PaypalConfiguration.GetAPIContext();
-            var baseURI = Request.RequestUri.GetLeftPart(UriPartial.Authority) + "/PaymentPayPal?";
+            var baseURI = Request.RequestUri.GetLeftPart(UriPartial.Authority) + "/PaymentPayPal";
             string paypalRedirectUrl = null;
 
-                var createdPayment = this.CreatePayment(apiContext, orderDto, baseURI + "OrderId=" + order.Id);
-                var links = createdPayment.links.GetEnumerator();
-                while (links.MoveNext())
-                {
-                    Links lnk = links.Current;
-                    if (lnk.rel.ToLower().Trim().Equals("approval_url"))
+            var createdPayment = this.CreatePayment(apiContext, orderDto, baseURI + "?OrderId=" + order.Id);
+            var links = createdPayment.links.GetEnumerator();
+            while (links.MoveNext())
+            {
+                Links lnk = links.Current;
+                if (lnk.rel.ToLower().Trim().Equals("approval_url"))
                     {
                         paypalRedirectUrl = lnk.href;
-                    }
                 }
+            }
 
-
-            orderDto.LinkPaymentPaypal = paypalRedirectUrl;
-
+            String url = baseURI + $"/CheckRedirect?Ref={System.Web.HttpUtility.UrlEncode(paypalRedirectUrl)}&OrderId={order.Id}";
+            orderDto.LinkPaymentPaypal = url;
             String message = SendMailController.RenderViewToString("Orders", "~/Views/SendMail/MailTemplate.cshtml", orderDto);
             SendMailController.SendMail(order.Email, message);
             if (order.TypePayment == 1)
@@ -311,7 +310,7 @@ namespace project_sem_3_api.Controllers
                 return Ok();
             }else
             {
-                return Ok(paypalRedirectUrl);
+                return Ok(url);
             }
         }
 
