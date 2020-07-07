@@ -1,0 +1,31 @@
+﻿@model project_sem_3_api.Models.Order
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Successfuly</title>
+    <style>
+        .payment-success {
+            text-align: center;
+            font-family: sans-serif;
+        }
+
+            .payment-success h1 {
+                color: #22ab0a;
+            }
+    </style>
+</head>
+<body>
+    <div class="payment-success">
+        <h1>Payment Successfuly</h1>
+        <h3>Dear, @Model.Name</h3>
+        <p>Your order has been successfully paid</p>
+    </div>
+</body>
+</html>
