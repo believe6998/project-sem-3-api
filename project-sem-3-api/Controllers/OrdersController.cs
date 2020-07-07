@@ -2,21 +2,16 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
-using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
-using System.Net.Mail;
 using System.Text;
-using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
-using System.Web.Mvc;
-using System.Web.Routing;
+using System.Xml.Linq;
 using Newtonsoft.Json.Linq;
+using PayPal.Api;
 using project_sem_3_api.Models;
 
 namespace project_sem_3_api.Controllers
@@ -84,7 +79,7 @@ namespace project_sem_3_api.Controllers
                 .Skip(skip)
                 .Take(size);
 
-            return Ok(new PagedResult<Order>(orders.ToList(), page, size, total));
+            return Ok(new PagedResult<Models.Order>(orders.ToList(), page, size, total));
         }
 
         // GET: api/Orders/5
@@ -118,7 +113,7 @@ namespace project_sem_3_api.Controllers
 
         // PUT: api/Orders/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutOrder(int id, Order order)
+        public IHttpActionResult PutOrder(int id, Models.Order order)
         {
             if (!ModelState.IsValid)
             {
@@ -159,14 +154,16 @@ namespace project_sem_3_api.Controllers
             var email = jsonData.email;
             var name = jsonData.name;
             var phone = jsonData.phone;
-            var totalPrice = 0;
+            var typePayment = jsonData.typePayment;
+            decimal totalPrice = 0;
 
-            var order = new Order
+            var order = new Models.Order
             {
                 Name = name,
                 Email = email,
                 Phone = phone,
-                TotalPrice = totalPrice
+                TotalPrice = totalPrice,
+                TypePayment = typePayment
             };
             db.Orders.Add(order);
             db.SaveChanges();
@@ -228,8 +225,8 @@ namespace project_sem_3_api.Controllers
                     return BadRequest("No objectId");
                 }
 
-                var distancePrice = seatType.Price * (distance / 1000);
-                var seatPrice = distancePrice + distancePrice * pricePercent / 100 - distancePrice * objectPassenger.PricePercent / 100;
+                decimal distancePrice = seatType.Price * (distance / 1000);
+                decimal seatPrice = distancePrice + distancePrice * pricePercent / 100 - distancePrice * objectPassenger.PricePercent / 100;
 
                 totalPrice += seatPrice;
 
@@ -264,6 +261,13 @@ namespace project_sem_3_api.Controllers
                     IdentityNumber = passengerIdentityNumber,
                     Status = ticket.Status
                 };
+                String json = Newtonsoft.Json.JsonConvert.SerializeObject(new { 
+                    code = ticket.Code,
+                    identityNumber = ticket.IdentityNumber,
+                    departureDay = ticketDto.DepartureDay
+                }, Newtonsoft.Json.Formatting.Indented);
+
+                SendMailController.GenQRCode(json, ticket.Code);
 
                 ticketDtos.Add(ticketDto);
                 db.Tickets.Add(ticket);
@@ -278,69 +282,104 @@ namespace project_sem_3_api.Controllers
                 Email = order.Email,
                 Phone = order.Phone,
                 TicketDtos = ticketDtos,
-                Status = order.Status
+                Status = order.Status,
+                TotalPrice = order.TotalPrice
             };
 
-            String message = RenderViewToString("Orders", "~/Views/SendMail/MailTemplate.cshtml", orderDto);
+            APIContext apiContext = PaypalConfiguration.GetAPIContext();
+            var baseURI = Request.RequestUri.GetLeftPart(UriPartial.Authority) + "/PaymentPayPal?";
+            string paypalRedirectUrl = null;
 
-            SendMail("dekujzy@gmail.com", message);
+                var createdPayment = this.CreatePayment(apiContext, orderDto, baseURI + "OrderId=" + order.Id);
+                var links = createdPayment.links.GetEnumerator();
+                while (links.MoveNext())
+                {
+                    Links lnk = links.Current;
+                    if (lnk.rel.ToLower().Trim().Equals("approval_url"))
+                    {
+                        paypalRedirectUrl = lnk.href;
+                    }
+                }
 
-            return StatusCode(HttpStatusCode.OK);
-        }
 
-        public static string RenderViewToString(string controllerName, string viewName, object viewData)
-        {
-            using (var writer = new StringWriter())
+            orderDto.LinkPaymentPaypal = paypalRedirectUrl;
+
+            String message = SendMailController.RenderViewToString("Orders", "~/Views/SendMail/MailTemplate.cshtml", orderDto);
+            SendMailController.SendMail(order.Email, message);
+            if (order.TypePayment == 1)
             {
-                var context = HttpContext.Current;
-                var contextBase = new HttpContextWrapper(context);
-                var routeData = new RouteData();
-                routeData.Values.Add("controller", controllerName);
-                var controllerContext = new ControllerContext(contextBase,
-                                                             routeData,
-                                                             new EmptyController()); var razorViewEngine = new RazorViewEngine();
-                var razorViewResult = razorViewEngine.FindView(controllerContext, viewName, "", false);
-
-                var viewContext = new ViewContext(controllerContext, razorViewResult.View, new ViewDataDictionary(viewData), new TempDataDictionary(), writer);
-                razorViewResult.View.Render(viewContext, writer);
-                return writer.ToString();
+                return Ok();
+            }else
+            {
+                return Ok(paypalRedirectUrl);
             }
         }
 
-        private void SendMail(String address, String message)
+        private PayPal.Api.Payment payment;
+        private Payment CreatePayment(APIContext apiContext, Models.OrderDto order, string redirectUrl)
         {
-            try
+            var itemList = new ItemList()
             {
-                string email = "duongphu176@gmail.com";
-                string password = "uikkbmtjpcjvmpzs";
+                items = new List<Item>()
+            };
 
-                var loginInfo = new NetworkCredential(email, password);
-                var msg = new MailMessage();
-                var smtpClient = new SmtpClient("smtp.gmail.com", 587);
-
-                msg.From = new MailAddress(email);
-                msg.To.Add(new MailAddress(address));
-                msg.Subject = "Created order successfully";
-                msg.Body = message;
-                msg.IsBodyHtml = true;
-
-                smtpClient.EnableSsl = true;
-                smtpClient.UseDefaultCredentials = false;
-                smtpClient.Credentials = loginInfo;
-                smtpClient.Send(msg);
-            }
-            catch (Exception)
+            foreach (var ticket in order.TicketDtos)
             {
-                throw;
+                Item item = new Item()
+                {
+                    name = $"Train ticket form {ticket.Source} to {ticket.Destination}",
+                    description = $"Date: {ticket.DepartureDay} \nSeat: {ticket.SeatNumber} \nCoach: {ticket.TrainCarNumber} \nClass: {ticket.TrainCarType} ",
+                    currency = "USD",
+                    price = ticket.Price.ToString(),
+                    quantity = "1",
+                    sku = "sku"
+                };
+                itemList.items.Add(item);
             }
+ 
+            var amount = new Amount()
+            {
+                currency = "USD",
+                total = order.TotalPrice.ToString()
+            };
+
+            var payer = new Payer()
+            {
+                payment_method = "paypal"
+            };
+            // Configure Redirect Urls here with RedirectUrls object  
+            var redirUrls = new RedirectUrls()
+            {
+                cancel_url = redirectUrl + "&Cancel=true",
+                return_url = redirectUrl
+            };
+            // Adding Tax, shipping and Subtotal details  
+
+
+            var transactionList = new List<Transaction>();
+            transactionList.Add(new Transaction()
+            {
+                description = "Transaction description",
+                invoice_number = "your generated invoice number",
+                amount = amount,
+                item_list = itemList
+            });
+            this.payment = new Payment()
+            {
+                intent = "sale",
+                payer = payer,
+                transactions = transactionList,
+                redirect_urls = redirUrls
+            };
+            return this.payment.Create(apiContext);
         }
 
 
         // DELETE: api/Orders/5
-        [ResponseType(typeof(Order))]
+        [ResponseType(typeof(Models.Order))]
         public IHttpActionResult DeleteOrder(int id)
         {
-            Order order = db.Orders.Find(id);
+            Models.Order order = db.Orders.Find(id);
             if (order == null)
             {
                 return NotFound();
@@ -384,8 +423,4 @@ namespace project_sem_3_api.Controllers
         }
     }
 
-    class EmptyController : ControllerBase
-    {
-        protected override void ExecuteCore() { }
-    }
 }

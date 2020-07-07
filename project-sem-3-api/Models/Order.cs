@@ -12,6 +12,7 @@ namespace project_sem_3_api.Models
         public string Email { get; set; }
         public string Name { get; set; }
         public string Phone { get; set; }
+        public int TypePayment { get; set; } = 1;
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime? UpdatedAt { get; set; }
         public DateTime? DeletedAt { get; set; }

@@ -12,24 +12,46 @@ using System.Web.Mvc;
 using System.Net.Mail;
 using System.Web;
 using System.Web.Routing;
+using QRCoder;
+using CloudinaryDotNet;
+using System.Drawing;
+using System.Drawing.Imaging;
+using CloudinaryDotNet.Actions;
+using Microsoft.Ajax.Utilities;
 
 namespace project_sem_3_api.Controllers
 {
     public class ValuesController : ApiController
     {
         private MyDatabaseContext db = new MyDatabaseContext();
+        private QRCodeGenerator qrGenerator = new QRCodeGenerator();
+        private Cloudinary _cloudinary = new Cloudinary(new Account("dpciaiobf", "546941639243358", "-clBvD99twwKZUYzhb2eLQDt7SU"));
 
         // GET api/values
 
-        public String Get()
+        public ImageUploadResult GetValues(String message)
         {
-            var a = new Test1 { 
-                Name = "Hello Phú Đẹp Trai"
-            };
+          
+                QRCodeData qrCodeData = qrGenerator.CreateQrCode(" {'Code': '1' }", QRCodeGenerator.ECCLevel.Q);
+                QRCode qrCode = new QRCode(qrCodeData);
+                Bitmap qrCodeImage = qrCode.GetGraphic(20);
+                System.IO.MemoryStream stream = new MemoryStream();
+                qrCodeImage.Save(stream, ImageFormat.Png);
 
-            String body = RenderViewToString("Values", "~/Views/SendMail/MailTemplate.cshtml", a);
-            return body;
+                var bytes = ((MemoryStream)stream).ToArray();
+                System.IO.Stream inputStream = new MemoryStream(bytes);
+                ImageUploadParams a = new ImageUploadParams
+                    {
+                        File = new FileDescription(Guid.NewGuid().ToString(), inputStream),
+                        PublicId = "4"
+                    };
+                ImageUploadResult uploadResult = _cloudinary.Upload(a);
+                return uploadResult;
+         
+            
         }
+
+
 
         public static string RenderViewToString(string controllerName, string viewName, object viewData)
         {

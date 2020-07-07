@@ -20,7 +20,7 @@
                 </h3>
             </div>
             <div style="margin: 30px 0">
-                <table style="margin: 0 auto; border-collapse: collapse; width: 100%" ;>
+                <table style="margin: 0 auto; border-collapse: collapse; width: 500px" ;>
                     <tbody>
                         <tr>
                             <td style="padding: 8px 0;">Customer name</td>
@@ -44,6 +44,34 @@
             @if (@Model.Status == 1)
             {
                 <div style="width: 500px; margin: 0 auto">
+                    <a href="@Model.LinkPaymentPaypal" style="
+                                    padding: 10px 20px;
+                                    border: 1px solid #FF9933;
+                                    border-radius: 5px;
+                                    background-image: linear-gradient(#FFF0A8, #F9B421);
+                                    margin: 0 auto;
+                                    display: block;
+                                    max-width: 180px;
+                                    position: relative;
+                                    ">
+                        <span style="
+                              font-size: 14px;
+                                          color: #505050;
+                                          vertical-align: baseline;
+                                          text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.6);
+                                          ">
+                            Payment with
+                        </span>
+                        <span style="font-family: Verdana, Tahoma;
+                              font-weight: bold;
+                              font-size: 26px;
+                              display: inline-block;
+                              text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.6);
+                              font-size: 20px;
+                              ">
+                            <i style="color: #253b80;">Pay</i><i style="color: #179bd7;">Pal</i>
+                        </span>
+                    </a>
                     <small style="font-style: italic">
                         Please pay before @Model.Expired
                     </small>
@@ -56,23 +84,21 @@
                     <div style="margin: 30px auto;
                   max-width: 500px;
                   max-height: 200px;
-                  /* overflow: hidden; */
-                  /* box-shadow: 0 0 10px rgb(202, 202, 204, 0.2); */
                   border-radius: 2px;
                   background-color: rgba(231, 231, 231, 0.6);
                   display: flex;
                   align-items: center;">
                         <div style="padding: 10px;">
                             <img width="100"
-                                 src="https://store-images.s-microsoft.com/image/apps.33967.13510798887182917.246b0a3d-c3cc-46fc-9cea-021069d15c09.392bf5f5-ade4-4b36-aa63-bb15d5c3817a"
+                                 src="https://res.cloudinary.com/dpciaiobf/image/upload/@(ticket.Code).png"
                                  alt="">
                         </div>
                         <div class="my_custom_ink" style="border-left: 2px dashed #fff;
                               height: 200px;
                               width: 1px;
                               position: relative;"></div>
-                        <div style="padding: 0 26px;">
-                            <table style="width: 500px;">
+                        <div style="padding: 0 26px; width: 380px">
+                            <table style="width: 100%;">
                                 <tr>
                                     <td style="font-size: 0.6em;
                     font-weight: 300;
@@ -82,11 +108,10 @@
                     letter-spacing: 1px;">
                                         Code
                                     </td>
-                                    <td style="font-size: 0.8em;
-                font-weight: 400;
-                letter-spacing: 0.5px;
-                padding: 4px 0 4px;
-                text-transform: uppercase;">
+                                    <td style="        font-size: 0.8em;
+        font-weight: 400;
+        letter-spacing: 0.5px;
+        padding: 4px 0 4px;">
                                         @ticket.Code
                                     </td>
                                 </tr>
@@ -124,6 +149,7 @@
                                             <td style="font-size: 0.6em;
                               font-weight: 300;
                               color: #656565;
+                                text-transform: uppercase;
                               font-family: 'Roboto', sans-serif;
                               letter-spacing: 1px;padding: 8px 0;">
                                                 To
@@ -141,6 +167,7 @@
                               font-weight: 300;
                               color: #656565;
                               font-family: 'Roboto', sans-serif;
+                              text-transform: uppercase;
                               white-space: nowrap;
                               letter-spacing: 1px;padding: 8px 0;">
                                                 Date
@@ -153,6 +180,7 @@
                                             <td style="font-size: 0.6em;
                               font-weight: 300;
                               color: #656565;
+                              text-transform: uppercase;
                               font-family: 'Roboto', sans-serif;
                               letter-spacing: 1px;padding: 8px 0;">
                                                 Price
@@ -218,10 +246,10 @@
                 padding: 4px 0 4px;">
                                         @ticket.TrainCarType
                                     </td>
-                                    <td style="font-size: 0.8em;
-                font-weight: 400;
-                letter-spacing: 0.5px;
-                padding: 4px 0 4px;">
+                                    <td style="        font-size: 0.8em;
+        font-weight: 400;
+        letter-spacing: 0.5px;
+        padding: 4px 0 4px;">
                                         @ticket.SeatNumber
                                     </td>
                                 </tr>
