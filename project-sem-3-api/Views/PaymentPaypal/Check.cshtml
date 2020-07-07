@@ -1,0 +1,42 @@
+﻿@model project_sem_3_api.Models.Order
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Successfuly</title>
+    <style>
+        .center {
+            text-align: center;
+            font-family: sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div class="center">
+        @if (Model == null)
+        {
+            <h1>Not found order for payment</h1>
+        }
+        else if (ViewBag.Status == 0)
+        {
+            <h1>Your order has been cancel</h1>
+            <h3>Hi, @Model.Name</h3>
+            <p>Your order has been canceled on</p>
+        }
+        else
+        {
+            
+            <h1>Your order has been paid</h1>
+            <h3>Hi, @Model.Name</h3>
+            <p>Your order has been paid on</p>
+        }
+
+    </div>
+</body>
+</html>
