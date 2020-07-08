@@ -279,10 +279,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\dbps3.mdf" />
-    <Content Include="App_Data\dbps3_log.ldf">
-      <DependentUpon>dbps3.mdf</DependentUpon>
-    </Content>
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -400,6 +396,7 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="Views\PaymentWithPaypal\" />
   </ItemGroup>
   <PropertyGroup>

@@ -22,13 +22,14 @@ namespace project_sem_3_api.Controllers
             LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         // GET: api/Seats
-        public List<dynamic> GetSeats(int IdTrainCar, int StartTrainStation, int EndTrainStation, string DepartureDay)
+        public List<dynamic> GetSeats(int IdTrainCar, int StartStation, int EndStation, string DepartureDay)
         {
-            var startTs = db.TrainStations.Find(StartTrainStation);
-            var endTs = db.TrainStations.Find(EndTrainStation);
-
+            var startTs = db.TrainStations.FirstOrDefault(s => s.IdStation == StartStation);
+            var endTs = db.TrainStations.FirstOrDefault(s => s.IdStation == EndStation);
+            var train = db.TrainCars.FirstOrDefault(t => t.Id == IdTrainCar);
+        
             var Totaldistance = db.TrainStations
-                        .Where(ts => ts.IdTrain == IdTrainCar
+                        .Where(ts => ts.IdTrain == train.IdTrain
                                     && ts.IndexNumber <= endTs.IndexNumber
                                     && ts.IndexNumber >= startTs.IndexNumber
                         )
