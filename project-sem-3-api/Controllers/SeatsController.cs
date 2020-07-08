@@ -24,12 +24,13 @@ namespace project_sem_3_api.Controllers
         // GET: api/Seats
         public List<dynamic> GetSeats(int IdTrainCar, int StartStation, int EndStation, string DepartureDay)
         {
-            var startTs = db.TrainStations.FirstOrDefault(s => s.IdStation == StartStation);
-            var endTs = db.TrainStations.FirstOrDefault(s => s.IdStation == EndStation);
-            var train = db.TrainCars.FirstOrDefault(t => t.Id == IdTrainCar);
+            var trainCar = db.TrainCars.FirstOrDefault(t => t.Id == IdTrainCar);
+            var startTs = db.TrainStations.FirstOrDefault(s => s.IdStation == StartStation && s.IdTrain == trainCar.IdTrain);
+            var endTs = db.TrainStations.FirstOrDefault(s => s.IdStation == EndStation && s.IdTrain == trainCar.IdTrain);
+            
         
             var Totaldistance = db.TrainStations
-                        .Where(ts => ts.IdTrain == train.IdTrain
+                        .Where(ts => ts.IdTrain == trainCar.IdTrain
                                     && ts.IndexNumber <= endTs.IndexNumber
                                     && ts.IndexNumber >= startTs.IndexNumber
                         )
