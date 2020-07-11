@@ -34,6 +34,7 @@ namespace project_sem_3_api.Controllers
                          {
                              Id = tk.Id,
                              Code = tk.Code,
+                             PassengerName = tk.PassengerName,
                              TrainCarIndex = trainCar.IndexNumber,
                              TrainCartype = trainCarType.Name,
                              SeatNumber = seat.SeatNo,

@@ -19,8 +19,9 @@ namespace project_sem_3_api.Controllers
                             where s1.IdStation == StartStation
                             select new
                             {
+                                s1.Id,
                                 TrainId = s1.IdTrain,
-                                StartStaion = s1.IdStation,
+                                IdStartStaion = s1.IdStation,
                                 StartTime = s1.ArrivalTime,
                                 StartIndex = s1.IndexNumber
                             }
@@ -30,6 +31,7 @@ namespace project_sem_3_api.Controllers
                              where e1.IdStation == EndStation
                              select new
                              {
+                                 e1.Id,
                                  TrainId = e1.IdTrain,
                                  IdEndStaion = e1.IdStation,
                                  EndTime = e1.ArrivalTime,
@@ -42,6 +44,14 @@ namespace project_sem_3_api.Controllers
                          {
                              TrainId = t.Id,
                              TrainCode = t.Code,
+                             IdStartTrainStation = s.Id,
+                             IdEndTrainStation = e.Id,
+                             s.StartIndex,
+                             e.EndIndex,
+                             s.IdStartStaion,
+                             e.IdEndStaion,
+                             s.StartTime,
+                             e.EndTime,
                              TravelTime = e.EndTime - s.StartTime,
                              Points = (
                                  from ts in db.TrainStations
