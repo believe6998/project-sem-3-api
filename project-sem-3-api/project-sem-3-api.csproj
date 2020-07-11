@@ -229,6 +229,7 @@
     <Compile Include="Controllers\SendMailController.cs" />
     <Compile Include="Controllers\TicketsController.cs" />
     <Compile Include="Controllers\TrainCarsController.cs" />
+    <Compile Include="Controllers\TrainsController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Controllers\StationsController.cs" />
     <Compile Include="Global.asax.cs">
