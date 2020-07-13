@@ -25,7 +25,7 @@ namespace project_sem_3_api.Controllers
             order.Status = 2;
             db.Entry(order).State = EntityState.Modified;
             db.SaveChanges();
-            return Redirect("Success", order);
+            return View("Success", order);
         }
 
         public ActionResult CheckRedirect()
