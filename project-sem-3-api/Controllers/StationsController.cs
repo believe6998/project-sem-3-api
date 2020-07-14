@@ -18,7 +18,7 @@ namespace project_sem_3_api.Controllers
 
            [Route("api/stations/all")]
             public IEnumerable<dynamic> GetAllStations() {
-            return from s in db.Stations select new { s.Id, s.Name };
+            return from s in db.Stations select new { s.Id, s.Name , s.Location.Longitude, s.Location.Latitude};
              }
 
         // GET: api/Stations
